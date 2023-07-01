@@ -13,7 +13,7 @@ from parameters import (windowSize, logWeight, temp, mid_idx, numberClass, spatI
                         specUncertainty, tempUncertainty, path)
 
  
-# .py file collab pe chalana
+
 
 # Flatten blocks inside a dask array            
 def block2row(array, row, folder, block_id=None):
@@ -42,10 +42,13 @@ def block2row(array, row, folder, block_id=None):
 
 # Divide an image in overlapping blocks   
 def partition(image, folder):
+
     image_da = da.from_array(image, chunks = (windowSize,image.shape[1]))
     image_pad = da.pad(image_da, windowSize//2, mode='constant')
 
-    #! teeno images ka shape
+    print ("stp line 48 - def partition(image, _) - image's dimension: " + image.ndim)
+    print ("stp line 49 - def partition - image_da's shape: " + image_da.ndim)
+    print ("stp line 49 - def partition - image_pad's shape: " + image_pad.ndim)
     
     for i in range(0,windowSize):
         row = str(i)
@@ -69,20 +72,27 @@ def da_stack(folder, shape):
                 da_list.append(da_array) 
             except Exception:
                 continue
-      
-    return da.rechunk(da.concatenate(da_list, axis=0), chunks = (shape[1],windowSize**2))
+    da_stack_return =  da.rechunk(da.concatenate(da_list, axis=0), chunks = (shape[1],windowSize**2))
+
+    print("stp line 77 - def da_stack - da_stack_return's dimension: "  +  da_stack_return)
+
+    return da_stack_return
 
 
 # Calculate the spectral distance
 def spectral_distance(fine_image_t0, coarse_image_t0):
-
     spec_diff = fine_image_t0 - coarse_image_t0
     spec_dist = 1/(abs(spec_diff) + 1.0)
     print ("Done spectral distance!", spec_dist)
-    
-    #! print 4o ki shapes 
+
+    print ("stp line 88 - def spectral_distance(fine_image_t0, coarse_image_t0) - fine_image_t0's dimension: " + fine_image_t0.ndim)
+    print ("stp line 89 - def spectral_distance(fine_image_t0, coarse_image_t0) - coarse_image_t0's dimension: " + coarse_image_t0.ndim)
+    print ("stp line 90 - def spectral_distance - spec_diff's dimension: " + spec_diff.ndim)
+    print ("stp line 91 - def spectral_distance - spec_dist's dimension: " + spec_dist.ndim)
 
     return spec_diff, spec_dist
+
+
 
 
 # Calculate the temporal distance    
@@ -90,23 +100,34 @@ def temporal_distance(coarse_image_t0, coarse_image_t1):
     temp_diff = coarse_image_t1 - coarse_image_t0
     temp_dist = 1/(abs(temp_diff) + 1.0)
     print ("Done temporal distance!", temp_dist)
-    #! print 4o ki shapes   
+
+    print ("stp line 104 - def temporal_distance(coarse_image_t0, coarse_image_t1) - coarse_image_t0's dimension: "  + coarse_image_t0.ndim)
+    print ("stp line 105 - def temporal_distance(coarse_image_t0, coarse_image_t1) - coarse_image_t1's dimension: "  + coarse_image_t1.ndim)
+    print ("stp line 106 - def spectral_distance - spec_diff's dimension: " + temp_diff.ndim)
+    print ("stp line 107 - def spectral_distance - spec_dist's dimension: " + temp_dist.ndim)
+
     return temp_diff, temp_dist
    
 
 # Calculate the spatial distance    
 def spatial_distance(array):
-    coord = np.sqrt((np.mgrid[0:windowSize,0:windowSize]-windowSize//2)**2)
-    spat_dist = np.sqrt(((0-coord[0])**2+(0-coord[1])**2))
-    rel_spat_dist = spat_dist/spatImp + 1.0 # relative spatial distance
-    rev_spat_dist = 1/rel_spat_dist # relative spatial distance reversed
+    coord          = np.sqrt((np.mgrid[0:windowSize,0:windowSize]-windowSize//2)**2)
+    spat_dist      = np.sqrt(((0-coord[0])**2+(0-coord[1])**2))
+    rel_spat_dist  = spat_dist/spatImp + 1.0 # relative spatial distance
+    rev_spat_dist  = 1/rel_spat_dist # relative spatial distance reversed
     flat_spat_dist = np.ravel(rev_spat_dist)
-    spat_dist_da = da.from_array(flat_spat_dist, chunks=flat_spat_dist.shape)
+    spat_dist_da   = da.from_array(flat_spat_dist, chunks=flat_spat_dist.shape)
+
+    print(coord.ndim)
+    print(spat_dist.ndim)
+    print(rel_spat_dist.ndim)
+    print(rev_spat_dist.ndim)
+    print(flat_spat_dist.ndim)
+    print(spat_dist_da.ndim)
+
     print ("Done spatial distance!", spat_dist_da)
     
     return spat_dist_da
-
-#! sabki shapes nikaalni hai
 
 
 # Define the threshold used in the dynamic classification process
@@ -115,6 +136,10 @@ def similarity_threshold(fine_image_t0):#, st_dev):
     st_dev = da.nanstd(fine_image_t0, axis=1)# new
     sim_threshold = st_dev*2/numberClass 
     print ("Done similarity threshold!", sim_threshold)
+
+    print(fine_image_t0.ndim)
+    print(st_dev.ndim)
+    print(sim_threshold.ndim)
 
     return sim_threshold
 
@@ -128,6 +153,10 @@ def similarity_pixels(fine_image_t0):
         <= sim_threshold[:,None], 1, 0) #sim_threshold[:,mid_idx][:,None], 1, 0) # new
     print ("Done similarity pixels!", similar_pixels)
    
+    print(fine_image_t0.ndim)
+    print(sim_threshold.ndim)
+    print(similar_pixels.ndim)
+
     return similar_pixels
         
 
@@ -215,33 +244,3 @@ def starfm(fine_image_t0, coarse_image_t0, coarse_image_t1, profile, shape):
          prediction = prediction_da.compute()
     
     return prediction
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        
-        
