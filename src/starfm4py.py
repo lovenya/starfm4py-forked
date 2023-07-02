@@ -46,9 +46,12 @@ def partition(image, folder):
     image_da = da.from_array(image, chunks = (windowSize,image.shape[1]))
     image_pad = da.pad(image_da, windowSize//2, mode='constant')
 
-    print ("stp line 48 - def partition(image, _) - image's dimension: " + image.shape)
-    print ("stp line 49 - def partition - image_da's shape: " + image_da.shape)
-    print ("stp line 49 - def partition - image_pad's shape: " + image_pad.shape)
+    print ("stp line 49 - def partition(image, _) - image's dimension: ") 
+    print(image.shape)
+    print ("stp line 51 - def partition - image_da's shape: ")
+    print(image_da.shape)
+    print ("stp line 53 - def partition - image_pad's shape: ")
+    print(image_pad.shape)
     
     for i in range(0,windowSize):
         row = str(i)
@@ -74,7 +77,8 @@ def da_stack(folder, shape):
                 continue
     da_stack_return =  da.rechunk(da.concatenate(da_list, axis=0), chunks = (shape[1],windowSize**2))
 
-    print("stp line 77 - def da_stack - return da_stack_return's dimension: "  +  da_stack_return)
+    print("stp line 80 - def da_stack - return da_stack_return's dimension: ")
+    print(da_stack_return)
 
     return da_stack_return
 
@@ -85,10 +89,14 @@ def spectral_distance(fine_image_t0, coarse_image_t0):
     spec_dist = 1/(abs(spec_diff) + 1.0)
     print ("Done spectral distance!", spec_dist)
 
-    print ("stp line 88 - def spectral_distance(fine_image_t0, coarse_image_t0) - fine_image_t0's dimension: " + fine_image_t0.shape)
-    print ("stp line 89 - def spectral_distance(fine_image_t0, coarse_image_t0) - coarse_image_t0's dimension: " + coarse_image_t0.shape)
-    print ("stp line 90 - def spectral_distance - return spec_diff's dimension: " + spec_diff.shape)
-    print ("stp line 91 - def spectral_distance - return spec_dist's dimension: " + spec_dist.shape)
+    print ("stp line 92 - def spectral_distance(fine_image_t0, coarse_image_t0) - fine_image_t0's dimension: ")
+    print (fine_image_t0.shape)
+    print ("stp line 94 - def spectral_distance(fine_image_t0, coarse_image_t0) - coarse_image_t0's dimension: ")
+    print (coarse_image_t0.shape)
+    print ("stp line 96 - def spectral_distance - return spec_diff's dimension: ")
+    print(spec_diff.shape)
+    print ("stp line 98 - def spectral_distance - return spec_dist's dimension: ")
+    print(spec_dist.shape)
 
     return spec_diff, spec_dist
 
@@ -101,10 +109,14 @@ def temporal_distance(coarse_image_t0, coarse_image_t1):
     temp_dist = 1/(abs(temp_diff) + 1.0)
     print ("Done temporal distance!", temp_dist)
 
-    print ("stp line 104 - def temporal_distance(coarse_image_t0, coarse_image_t1) - coarse_image_t0's dimension: "  + coarse_image_t0.shape)
-    print ("stp line 105 - def temporal_distance(coarse_image_t0, coarse_image_t1) - coarse_image_t1's dimension: "  + coarse_image_t1.shape)
-    print ("stp line 106 - def temporal_distance - return temp_diff's dimension: " + temp_diff.shape)
-    print ("stp line 107 - def temporal_distance - return temp_dist's dimension: " + temp_dist.shape)
+    print ("stp line 112 - def temporal_distance(coarse_image_t0, coarse_image_t1) - coarse_image_t0's dimension: ", coarse_image_t0.shape)
+    print (coarse_image_t0.shape)
+    print ("stp line 113 - def temporal_distance(coarse_image_t0, coarse_image_t1) - coarse_image_t1's dimension: " )
+    print (coarse_image_t1.shape)
+    print ("stp line 114 - def temporal_distance - return temp_diff's dimension: " )
+    print (temp_diff.shape)
+    print ("stp line 115 - def temporal_distance - return temp_dist's dimension: ")
+    print (temp_dist.shape)
 
     return temp_diff, temp_dist
    
@@ -118,12 +130,18 @@ def spatial_distance(array):
     flat_spat_dist = np.ravel(rev_spat_dist)
     spat_dist_da   = da.from_array(flat_spat_dist, chunks=flat_spat_dist.shape)
 
-    print("stp line 121 - def spatial_distance - coord's dimension: " + coord.shape)
-    print("stp line 122 - def spatial_distance - spat_dist's dimension: " + spat_dist.shape)
-    print("stp line 123 - def spatial_distance - rel_spat_dist's dimension: " + rel_spat_dist.shape)
-    print("stp line 124 - def spatial_distance - rev_spat_dist's dimension: " + rev_spat_dist.shape)
-    print("stp line 125 - def spatial_distance - flat_spat_dist's dimension: " + flat_spat_dist.shape)
-    print("stp line 126 - def spatial_distance - return spat_dist_da's dimension: " + spat_dist_da.shape)
+    print ("stp line 129 - def spatial_distance - coord's dimension: ")
+    print (coord.shape)
+    print ("stp line 130 - def spatial_distance - spat_dist's dimension: ")
+    print (spat_dist.shape)
+    print ("stp line 131 - def spatial_distance - rel_spat_dist's dimension: ")
+    print (rel_spat_dist.shape)
+    print ("stp line 132 - def spatial_distance - rev_spat_dist's dimension: ")
+    print (rev_spat_dist.shape)
+    print ("stp line 133 - def spatial_distance - flat_spat_dist's dimension: ")
+    print (flat_spat_dist.shape)
+    print ("stp line 134 - def spatial_distance - return spat_dist_da's dimension: ")
+    print (spat_dist_da.shape)
 
     print ("Done spatial distance!", spat_dist_da)
     
@@ -137,9 +155,12 @@ def similarity_threshold(fine_image_t0):#, st_dev):
     sim_threshold = st_dev*2/numberClass 
     print ("Done similarity threshold!", sim_threshold)
 
-    print("stp line 140 - def similarity_threshold(fine_image_t0) - fine_image_t0's dimension: " + fine_image_t0.shape)
-    print("stp line 141 - def similarity_threshold - st_dev's dimension: " + st_dev.shape)
-    print("stp line 142 - def similarity_threshold - return sim_threshold's dimension: " + sim_threshold.shape)
+    print("stp line 140 - def similarity_threshold(fine_image_t0) - fine_image_t0's dimension: ")
+    print(fine_image_t0.shape)
+    print("stp line 141 - def similarity_threshold - st_dev's dimension: ")
+    print(st_dev.shape)
+    print("stp line 142 - def similarity_threshold - return sim_threshold's dimension: ")
+    print(sim_threshold.shape)
 
     return sim_threshold
 
@@ -153,9 +174,12 @@ def similarity_pixels(fine_image_t0):
         <= sim_threshold[:,None], 1, 0) #sim_threshold[:,mid_idx][:,None], 1, 0) # new
     print ("Done similarity pixels!", similar_pixels)
    
-    print("stp line 156 - def similarity_pixels(fine_image_t0) - fine_image_t0's dimension: " + fine_image_t0.shape)
-    print("stp line 157 - def similarity_pixels - sim_threshold's dimension: " + sim_threshold.shape)
-    print("stp line 158 - def similarity_pixels - return similar_pixels's dimension: " + similar_pixels.shape)
+    print("stp line 156 - def similarity_pixels(fine_image_t0) - fine_image_t0's dimension: ")
+    print(fine_image_t0.shape)
+    print("stp line 157 - def similarity_pixels - sim_threshold's dimension: " )
+    print(sim_threshold.shape)
+    print("stp line 158 - def similarity_pixels - return similar_pixels's dimension: ")
+    print(similar_pixels.shape)
 
     return similar_pixels
         
@@ -175,18 +199,29 @@ def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff):
     similar_pixels_filtered = similar_pixels*st_filter
     print ("Done filtering!", similar_pixels_filtered)
 
-    print ("stp line 178 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - fine_image_t0's dimension: " + fine_image_t0.shape)
-    print ("stp line 179 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - spec_dist's dimension: " + spec_dist.shape)
-    print ("stp line 180 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - temp_dist's dimension: " + temp_dist.shape)
-    print ("stp line 181 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - spec_diff's dimension: " + spec_diff.shape)
-    print ("stp line 182 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - temp_diff's dimension: " + temp_diff.shape)
+    print ("stp line 178 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - fine_image_t0's dimension: " )
+    print(fine_image_t0.shape)
+    print ("stp line 179 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - spec_dist's dimension: " )
+    print(spec_dist.shape)
+    print ("stp line 180 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - temp_dist's dimension: " )
+    print(temp_dist.shape)
+    print ("stp line 181 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - spec_diff's dimension: " )
+    print(spec_diff.shape)
+    print ("stp line 182 - def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff) - temp_diff's dimension: " )
+    print(temp_diff.shape)
     
-    print ("stp line 184 - def filtering - similar_pixels's dimension: " + similar_pixels.shape)
-    print ("stp line 185 - def filtering - max_spec_dist's dimension: " + max_spec_dist.shape)
-    print ("stp line 186 - def filtering - max_temp_dist's dimension: " + max_temp_dist.shape)
-    print ("stp line 187 - def filtering - spec_filter's dimension: " + spec_filter.shape)
-    print ("stp line 188 - def filtering - st_filter's dimension: " + st_filter.shape)
-    print ("stp line 189 - def filtering - return similar_pixels_filtered's dimension: " + similar_pixels_filtered.shape)   
+    print ("stp line 184 - def filtering - similar_pixels's dimension: ")
+    print(similar_pixels.shape)
+    print ("stp line 185 - def filtering - max_spec_dist's dimension: ")
+    print(max_spec_dist.shape)
+    print ("stp line 186 - def filtering - max_temp_dist's dimension: ")
+    print(max_temp_dist.shape)
+    print ("stp line 187 - def filtering - spec_filter's dimension: ")
+    print(spec_filter.shape)
+    print ("stp line 188 - def filtering - st_filter's dimension: ")
+    print(st_filter.shape)
+    print ("stp line 189 - def filtering - return similar_pixels_filtered's dimension: ")
+    print(similar_pixels_filtered.shape)   
 
 
     return similar_pixels_filtered # sim_pixels_sparse
@@ -195,8 +230,8 @@ def filtering(fine_image_t0, spec_dist, temp_dist, spec_diff, temp_diff):
 # Calculate the combined distance
 def comb_distance(spec_dist, temp_dist, spat_dist):
 
-    print ("stp line 198 - def comb_distance(spec_dist, temp_dist, spat_dist) - spec_dist's, passed as a argument in the function, dimension : " + spec_dist.shape)
-    print ("stp line 199 - def comb_distance(spec_dist, temp_dist, spat_dist) - temp_dist's, passed as a argument in the function, dimension : " + temp_dist.shape)
+    print ("stp line 198 - def comb_distance(spec_dist, temp_dist, spat_dist) - spec_dist's, passed as a argument in the function, dimension : ", spec_dist.shape)
+    print ("stp line 199 - def comb_distance(spec_dist, temp_dist, spat_dist) - temp_dist's, passed as a argument in the function, dimension : ", temp_dist.shape)
 
 
     if logWeight == True:
@@ -256,7 +291,7 @@ def weighting(spec_dist, temp_dist, comb_dist, similar_pixels_filtered):
 # Derive fine resolution reflectance for the day of prediction 
 def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape):
 
-    print ("stp line 259 - def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape) - fine_image_t0  's dimension: " + fine_image_t0.shape)
+    print ("stp line 259 - def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape) - fine_image_t0  's dimension: ", fine_image_t0.shape)
     print ("stp line 260 - def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape) - coarse_image_t0's dimension: " + coarse_image_t0.shape)
     print ("stp line 261 - def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape) - coarse_image_t1's dimension: " + coarse_image_t1.shape)
     print ("stp line 262 - def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape) - shape's dimension: " + shape.shape)
