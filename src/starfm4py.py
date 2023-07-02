@@ -316,7 +316,7 @@ def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape):
     print ("stp line 316 - def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape) - coarse_image_t1's dimension: ")
     print(coarse_image_t1.shape)
     print ("stp line 318 - def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape) - shape's dimension: ")
-    print(shape)
+    print(shape, "'Tuple'")
 
     spec      = spectral_distance(fine_image_t0, coarse_image_t0)
     spec_diff = spec[0]
@@ -335,13 +335,13 @@ def predict(fine_image_t0, coarse_image_t0, coarse_image_t1, shape):
     print ("Done prediction!")
     
     print ("stp line 337 - def predict - spec's dimension: ")
-    print(spec.shape)
+    print(spec, "'Tuple'")
     print ("stp line 339 - def predict - spec_diff's dimension: ")
     print(spec_diff.shape)
     print ("stp line 341 - def predict - spec_dist's dimension: ")
     print(spec_dist.shape)
     print ("stp line 343 - def predict - temp's dimension: ")
-    print(temp.shape)
+    print(temp, "'Tuple'")
     print ("stp line 345 - def predict - temp_diff's dimension: ")
     print(temp_diff.shape)
     print ("stp line 347 - def predict - temp_dist's dimension: ")
